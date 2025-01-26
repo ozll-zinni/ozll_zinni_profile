@@ -29,17 +29,7 @@ const projects = [
   },
 ];
 
-// 배열을 2개씩 묶는 함수
-function chunkArray(array, size) {
-  const result = [];
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size));
-  }
-  return result;
-}
-
 export default function Home() {
-  const chunkedProjects = chunkArray(projects, 2);
   return (
     <main className="snap-y snap-mandatory overflow-y-auto h-screen w-full">
       {/* 첫 번째 섹션 */}
@@ -74,48 +64,34 @@ export default function Home() {
       </section>
 
       {/* 프로젝트 섹션 */}
-      {chunkedProjects.map((group, groupIdx) => (
-        <section
-          key={groupIdx}
-          className="snap-start h-screen flex flex-col py-20 space-y-28"
-        >
-          {group.map((project, idx) => (
-            <div
-              key={project.slug}
-              className={`flex w-full items-end px-10 ${
-                idx % 2 === 0 ? "justify-start" : "justify-end"
-              }`}
-            >
-              {/* 짝수 프로젝트(텍스트 왼쪽) */}
-              {idx % 2 === 1 && (
-                <div className="pr-6 mb-2 text-right">
-                  <h2 className="text-lg font-bold">{project.title}</h2>
-                  <p className="mt-1 text-gray-600">{project.date}</p>
-                </div>
-              )}
-              {/* 프로젝트 이미지 */}
-              <div className="max-w-[37%]">
+      <section className="snap-start py-16 px-4 sm:px-8 md:px-16">
+        {projects.map((project, idx) => (
+          <div key={project.slug} className="mb-16 md:mb-32">
+            <div className={`flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              {/* 이미지 */}
+              <div className="w-full md:w-1/3 sm:w-full">
                 <Link href={`/projects/${project.slug}`}>
                   <Image
                     src={project.image}
                     alt={project.title}
-                    width={1200}
-                    height={600}
+                    width={600}
+                    height={300}
                     className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-300"
                   />
                 </Link>
               </div>
-              {/* 홀수 프로젝트(텍스트 오른쪽) */}
-              {idx % 2 === 0 && (
-                <div className="pl-6 mb-2">
-                  <h2 className="text-lg font-bold">{project.title}</h2>
-                  <p className="mt-1 text-gray-600">{project.date}</p>
-                </div>
-              )}
+
+              {/* 텍스트 */}
+              <div className={`w-full md:w-1/2 flex flex-col justify-end ${
+                idx % 2 === 0 ? 'md:pl-8 items-start' : 'md:pr-8 items-end text-right'
+              }`}>
+                <h2 className="text-lg font-bold mt-4 md:mt-0">{project.title}</h2>
+                <p className="mt-1 text-gray-600">{project.date}</p>
+              </div>
             </div>
-          ))}
-        </section>
-      ))}
+          </div>
+        ))}
+      </section>
     </main>
   );
 }
