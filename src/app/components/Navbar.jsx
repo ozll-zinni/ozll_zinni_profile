@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 w-full flex justify-between items-center p-4 z-50">
-      {/* 왼쪽 로고 */}
+    <nav className="fixed top-0 left-0 w-full flex justify-between items-center px-4 sm:px-8 lg:px-8 py-4 z-50">
+    {/* 왼쪽 로고 */}
       <Link href="/" className="text-lg">
         ozll_zinni
       </Link>
