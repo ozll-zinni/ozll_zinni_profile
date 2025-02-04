@@ -18,8 +18,10 @@ body {
   border: 2px solid #000; /* 원래는 #fff */
   border-radius: 50px;
   box-sizing: border-box;
+  overflow: hidden; /* 내부 요소가 벗어나지 않도록 */
 }
 
+/* === 마우스 내부 점 === */
 .scroll-down-10::before {
   content: "";
   position: absolute;
@@ -32,4 +34,51 @@ body {
   border-radius: 100%;
   animation: sdb10 2s infinite;
   box-sizing: border-box;
+}
+
+/* === 애니메이션 정의 === */
+@keyframes sdb10 {
+  0% {
+    opacity: 1;
+    top: 10px;
+  }
+  50% {
+    opacity: 0;
+    top: 35px;
+  }
+  100% {
+    opacity: 0;
+    top: 40px;
+  }
+}
+
+/* === 아래쪽 화살표 === */
+.scroll-down-10::after {
+  content: "";
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform: rotate(-45deg);
+  animation: arrow-down 1.5s infinite;
+}
+
+/* === 화살표 움직이는 애니메이션 === */
+@keyframes arrow-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(-45deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(5px) rotate(-45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px) rotate(-45deg);
+  }
 }
