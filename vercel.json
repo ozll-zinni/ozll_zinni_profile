@@ -1,0 +1,9 @@
+{
+    "redirects": [
+        { "source": "/index.html", "destination": "/", "permanent": true },
+        { "source": "/(.*)/index.html", "destination": "/$1", "permanent": true }
+    ],
+    "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+    "cleanUrls": true,
+    "trailingSlash": false
+}
