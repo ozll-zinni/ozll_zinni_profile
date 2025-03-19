@@ -61,7 +61,7 @@ const contentData = {
         {
             id: '0101',
             title: 'PORTFOLIO',
-            description: '리엑트와 타입스크립트로 만든 2024 포트폴리오',
+            description: '리엑트와 타입스크립트로 만든 2025 포트폴리오',
             image: '/project/personal_01.webp',
             staticImage: '/project/personal_01.webp',
             techs: ['React'],

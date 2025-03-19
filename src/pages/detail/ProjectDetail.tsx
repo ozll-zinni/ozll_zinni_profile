@@ -192,6 +192,10 @@ const ProjectDetail: React.FC = () => {
             <section>
                 <TitleBox>{project.title}</TitleBox>
 
+                {project.description && (
+                    <MarkdownContainer>{renderMarkdown(project.description)}</MarkdownContainer>
+                )}
+
                 {project.reason_created && (
                     <MarkdownContainer>{renderMarkdown(project.reason_created)}</MarkdownContainer>
                 )}
