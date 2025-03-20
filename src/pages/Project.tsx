@@ -81,7 +81,7 @@ const contentData = {
         },
         {
             id: '0202',
-            title: 'YTrip',
+            title: 'YTrip',
             description: '평소 좋아했던 유튜버의 여행을 그대로 따라 갈 수 있도록 정보를 제공하는 서비스',
             image: '/project/team_02.webp',
             staticImage: '/project/team_02.webp',
@@ -90,7 +90,7 @@ const contentData = {
         },
         {
             id: '0203',
-            title: 'O:D',
+            title: 'O:D',
             description: '사용자 맞춤 오디오북 서비스',
             image: '/project/team_03.webp',
             staticImage: '/project/team_03.webp',
