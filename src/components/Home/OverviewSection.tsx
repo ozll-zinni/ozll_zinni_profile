@@ -320,22 +320,22 @@ const OverviewSection = () => {
 
     useEffect(() => {
         gsap.set(overviewRef.current, {
-            opacity: 0,  // 초기 상태에서 투명하게
-            transform: 'translateY(50px)',  // 아래로 밀려있도록 설정
+            opacity: 0,
+            transform: 'translateY(50px)',
         });
     
         gsap.to(overviewRef.current, {
             scrollTrigger: {
-                trigger: overviewRef.current,  // ScrollTrigger가 활성화되는 요소
-                start: 'top 75%',  // 섹션이 75% 보일 때 트리거
-                end: 'bottom center',  // 끝부분이 화면의 가운데에 도달했을 때 트리거 종료
-                scrub: true,  // 스크롤을 따라 애니메이션이 부드럽게 진행
-                toggleActions: 'play none none none',  // 섹션이 화면에 들어오면 애니메이션 시작
+                trigger: overviewRef.current,
+                start: 'top 75%',
+                end: 'bottom center',
+                scrub: true,
+                toggleActions: 'play none none none',
             },
-            opacity: 1,  // 애니메이션이 트리거되면 opacity를 1로 변경
-            transform: 'translateY(0)',  // 애니메이션이 트리거되면 원래 위치로 이동
+            opacity: 1,
+            transform: 'translateY(0)',
             duration: 1,
-            ease: 'power2.out',  // 애니메이션 easing
+            ease: 'power2.out',
         });
         
         const isMobile = window.innerWidth <= 734;

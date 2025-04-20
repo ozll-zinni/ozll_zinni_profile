@@ -61,10 +61,10 @@ const contentData = {
         {
             id: '0101',
             title: 'PORTFOLIO',
-            description: '리엑트와 타입스크립트로 만든 2024 포트폴리오',
+            description: '리엑트와 타입스크립트로 만든 2025 포트폴리오',
             image: '/project/personal_01.webp',
             staticImage: '/project/personal_01.webp',
-            techs: ['React'],
+            techs: ['React', 'TypeScript'],
             link: `/project/personal/0101`,
         },
         
@@ -109,6 +109,15 @@ const contentData = {
         
     ],
     work: [
+        {
+            id: '0301',
+            title: '형제대출',
+            description: '형제대출 웹사이트 제작',
+            image: '/project/work_01.webp',
+            staticImage: '/project/work_01.gif',
+            techs: ['React', 'TypeScript'],
+            link: `/project/work/0301`,
+        },
         
     ],
 };
