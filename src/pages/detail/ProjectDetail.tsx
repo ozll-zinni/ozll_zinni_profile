@@ -192,9 +192,17 @@ const ProjectDetail: React.FC = () => {
             <section>
                 <TitleBox>{project.title}</TitleBox>
 
-                {project.reason_created && (
-                    <MarkdownContainer>{renderMarkdown(project.reason_created)}</MarkdownContainer>
+                {project.description && (
+                    <MarkdownContainer>{renderMarkdown(project.description)}</MarkdownContainer>
                 )}
+                
+                {project.reason_created && (
+                    <>
+                        <TitleBox>주제 선정 배경</TitleBox>
+                        <MarkdownContainer>{renderMarkdown(project.reason_created)}</MarkdownContainer>
+                    </>
+                )}
+
                 <TitleBox>주요 정보 및 링크 정보</TitleBox>
                 <MarkdownContainer>
                     <InfoText>
