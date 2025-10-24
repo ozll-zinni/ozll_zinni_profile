@@ -12,6 +12,8 @@ const OverviewContainer = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
+    content-visibility: auto;
+    contain-intrinsic-size: 800px 1200px;
 `;
 
 const TitleContainer = styled.div`
@@ -21,20 +23,27 @@ const TitleContainer = styled.div`
 `;
 
 const Line = styled.div`
-    position: absolute;
-    top: -10px;
-    left: 0;
-    height: 1px;
-    background-color: black;
-    width: 0%;
+  position: absolute;
+  top: 0;               
+  left: 0;
+  height: 1px;
+  width: 100%; 
+  background-color: var(--font-color);
+  z-index: 2; 
+  will-change: transform, opacity;
 `;
 
 const Title = styled.h2`
-    font-size: var(--font-title);
+    font-size: clamp(2rem, 6vw, 8rem);
     font-family: var(--font-default-eng);
     opacity: 0;
     z-index: 1;
     position: relative;
+    line-height: 1.1;
+
+    @media (max-width: 734px) {
+        font-size: clamp(1.5rem, 8vw, 3rem);
+    }
 `;
 
 const ContentWrap = styled.div`
@@ -108,6 +117,7 @@ const LinkBox = styled.li`
     overflow: hidden;
     opacity: 0;
     transform: translateY(50px);
+    will-change: opacity, transform;
     transition: background-color 0.3s ease;
 
     &::after {
@@ -206,47 +216,53 @@ const StyledLink = styled(Link)`
 `;
 
 const SpriteContainer = styled.div`
-    position: relative; /* 이 컨테이너 내부에서 절대 위치가 적용됨 */
-    z-index: 2;
-    display: inline-block;
-    flex: 0 0 14.8125rem;
-    height: 15rem;
-    background-image: url('/sprite.webp');
-    background-repeat: no-repeat;
-    background-position: center center; /* 이미지를 중앙에 위치시킴 */
-    background-size: contain; /* 이미지 비율 유지하면서 크기 맞추기 */
-    opacity: 0; /* 고정된 이미지가 보이도록 설정 */
-    transform: translateY(10px);
+  position: relative;
+  z-index: 2;
 
-    @media only screen and (max-width: 734px) {
-        width: 14.8125rem;
-        height: 15rem;
-        margin-bottom: 2rem;
-    }
+  width: 15rem;
+  height: 15rem;
+  background-image: url('/sprite.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  opacity: 0;
+  transform: translateY(10px);
+  will-change: opacity, transform;
+
+  @media (max-width: 900px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const TextWrap = styled.div`
-    margin: 2rem auto 4rem;
-    width: calc(36rem * 2 + 1.6rem);
-    display: flex;
-    align-items: center;
+  width: min(70%, 1000px);
+  margin: 2rem auto 4rem;
+
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  column-gap: 2rem;
+  align-items: start;
+
+  span {
+    max-width: 64ch; 
+    line-height: 1.6;
+    word-break: keep-all;
+    opacity: 0;
+    transform: translateY(10px);
+    text-align: left;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
 
     span {
-        word-break: keep-all;
-        line-height: 1.4;
-        opacity: 0;
-        transform: translateY(10px);
+      max-width: 100%;
+      text-align: center;
     }
-    @media only screen and (max-width: 1348px) {
-        width: calc(21.3rem * 2 + 1rem);
-    }
-
-    @media only screen and (max-width: 734px) {
-        width: 100%;
-        margin: 0 auto 2rem;
-        flex-direction: column;
-        text-align: center;
-    }
+  }
 `;
 
 const Tooltip = styled.div`
@@ -319,101 +335,65 @@ const OverviewSection = () => {
     const overviewRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        gsap.set(overviewRef.current, {
-            opacity: 0,
-            transform: 'translateY(50px)',
-        });
-    
-        gsap.to(overviewRef.current, {
-            scrollTrigger: {
-                trigger: overviewRef.current,
-                start: 'top 75%',
-                end: 'bottom center',
-                scrub: true,
-                toggleActions: 'play none none none',
-            },
-            opacity: 1,
-            transform: 'translateY(0)',
-            duration: 1,
-            ease: 'power2.out',
-        });
-        
-        const isMobile = window.innerWidth <= 734;
-        const isTablet = window.innerWidth > 734 && window.innerWidth <= 1348;
+  // 초기 상태
+  gsap.set([textRef_1.current, textRef_2.current, projectRef.current, aboutRef.current], {
+    opacity: 0,
+    y: 16,
+    willChange: 'opacity, transform',
+  });
+  gsap.set([lineRef.current, titleRef.current], { opacity: 0 });
 
-        const timeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: lineRef.current,
-                start: isMobile ? 'top 90%' : isTablet ? 'top 85%' : 'top center',
-                end: 'bottom center',
-                toggleActions: 'play none none none',
-            },
-        });
+  // 전체 컨테이너 페이드인
+  gsap.fromTo(
+    overviewRef.current,
+    { opacity: 0, y: 16, willChange: 'opacity, transform' },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.45,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: overviewRef.current,
+        start: 'top 95%',
+        once: true,
+      },
+    }
+  );
 
-        const duration = isMobile || isTablet ? 0.5 : 0.8;
-        const delay = isMobile || isTablet ? 0.1 : 0.3;
+  const isMobile = window.innerWidth <= 734;
+  const isTablet = window.innerWidth > 734 && window.innerWidth <= 1348;
+  const d = isMobile || isTablet ? 0.35 : 0.5;
+  const gap = isMobile || isTablet ? 0.05 : 0.15;
 
-        timeline
-            .to(lineRef.current, {
-                width: '100%',
-                duration: isMobile || isTablet ? 0.6 : 1,
-                ease: 'power2.out',
-            })
-            .to(
-                titleRef.current,
-                {
-                    opacity: 1,
-                    duration: duration,
-                    ease: 'power2.out',
-                },
-                '-=0.5'
-            )
-            .to(
-                textRef_1.current,
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: duration,
-                    ease: 'power2.out',
-                },
-                `+=${delay}`
-            )
-            .to(
-                textRef_2.current,
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: duration,
-                    ease: 'power2.out',
-                },
-                '-=0.3'
-            )
-            .to(
-                projectRef.current,
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: duration,
-                    ease: 'power2.out',
-                },
-                `+=${delay}`
-            )
-            .to(
-                aboutRef.current,
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: duration,
-                    ease: 'power2.out',
-                },
-                '-=0.3'
-            );
+  // ✅ 구분선(line) opacity 복구 추가
+  const tl = gsap.timeline({
+    defaults: { ease: 'power2.out' },
+    scrollTrigger: {
+      trigger: lineRef.current,
+      start: isMobile ? 'top 96%' : isTablet ? 'top 92%' : 'top 90%',
+      once: true,
+    },
+  });
 
-        ScrollTrigger.refresh();
-    }, []);
+  tl.fromTo(
+      lineRef.current,
+      { width: 0, opacity: 0 },
+      { width: '100%', opacity: 1, duration: 0.5 }
+    )
+    .to(titleRef.current, { opacity: 1, duration: d }, '-=0.25')
+    .to(textRef_1.current, { opacity: 1, y: 0, duration: d }, `+=${gap}`)
+    .to(textRef_2.current, { opacity: 1, y: 0, duration: d }, '-=0.2')
+    .to(projectRef.current, { opacity: 1, y: 0, duration: d }, `+=${gap}`)
+    .to(aboutRef.current, { opacity: 1, y: 0, duration: d }, '-=0.2');
+
+  return () => {
+    tl.kill();
+    ScrollTrigger.getAll().forEach(t => t.kill());
+  };
+}, []);
 
     return (
-        <OverviewContainer>
+        <OverviewContainer ref={overviewRef}>
             <TitleContainer>
                 <Line ref={lineRef} />
                 <Title ref={titleRef}>OVERVIEW</Title>

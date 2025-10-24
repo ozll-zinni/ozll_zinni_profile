@@ -58,7 +58,7 @@ const Container = styled.div`
 
 const TitleContainer = styled.div`
     font-family: var(--font-default-eng);
-    font-size: var(--font-title);
+    font-size: clamp(28px, 7vw, 8.4rem);
     width: var(--default-width);
     line-height: 1.1;
     display: flex;
@@ -83,6 +83,8 @@ const StyledLine = styled.div<{ alignment: 'flex-start' | 'center' | 'flex-end' 
     transform: translateY(2rem);
     margin-top: 1.25rem;
     display: flex;
+    flex-wrap: wrap;
+    gap: clamp(6px, 1.6vw, 16px);
     align-items: center;
     justify-content: ${({ alignment }) => alignment};
 
@@ -107,12 +109,8 @@ const StyledAnimatedImage1 = styled.img`
     opacity: 0;
     transform: translateY(1.25rem);
 
-    @media only screen and (max-width: 1348px) {
-        width: 7.37rem;
-    }
-
-    @media only screen and (max-width: 734px) {
-        width: 4.37rem;
+    @media (max-width: 640px) {
+        display: none; /* ✅ 모바일에서 겹침 방지 */
     }
 `;
 
@@ -213,6 +211,16 @@ const ImageContainer = styled.div`
     position: relative;
 `;
 
+const ScaleWrapper = styled.div`
+  width: 1920px; /* 기준 너비 */
+  transform-origin: top center;
+
+  /* 화면이 작아지면 전체를 비율로 축소 */
+  @media (max-width: 1920px) {
+    transform: scale(calc(100vw / 1920));
+  }
+`;
+
 const TitleSection = () => {
     const [hoveredCircle1, setHoveredCircle1] = useState(false);
     const [hoveredCircle2, setHoveredCircle2] = useState(false);
@@ -287,46 +295,49 @@ const TitleSection = () => {
     }, []);
 
     return (
-        <Container ref={containerRef}>
-            <TitleContainer>
-                <StyledLine alignment="flex-start" data-line>
-                    <Word data-word>INTUITIVE UI</Word>
-                    <ImageContainer
-                        onMouseEnter={() => setHoveredCircle1(true)}
-                        onMouseLeave={() => setHoveredCircle1(false)}
-                    >
-                        <StyledAnimatedImage1 src="/home/main_notebook.webp" alt="노트북 이미지" data-animated />
-                        <Circle1 data-circle />
-                        <Tooltip $isVisible={hoveredCircle1} $position="right">
-                            <p>안녕하세요 프론트엔드 개발자 김예진입니다. 반가워요!</p>
-                        </Tooltip>
-                    </ImageContainer>
-                </StyledLine>
+    <Container ref={containerRef}>
+        <ScaleWrapper>
+        <TitleContainer>
+            <StyledLine alignment="flex-start" data-line>
+            <Word data-word>INTUITIVE UI</Word>
+            <ImageContainer
+                onMouseEnter={() => setHoveredCircle1(true)}
+                onMouseLeave={() => setHoveredCircle1(false)}
+            >
+                <StyledAnimatedImage1 src="/home/main_notebook.webp" alt="노트북 이미지" data-animated />
+                <Circle1 data-circle />
+                <Tooltip $isVisible={hoveredCircle1} $position="right">
+                <p>안녕하세요 프론트엔드 개발자 김예진입니다. 반가워요!</p>
+                </Tooltip>
+            </ImageContainer>
+            </StyledLine>
 
-                <StyledLine alignment="center" data-line>
-                    <Word data-word>USER ENGAGEMENT</Word>
-                </StyledLine>
+            <StyledLine alignment="center" data-line>
+            <Word data-word>USER ENGAGEMENT</Word>
+            </StyledLine>
 
-                <StyledLine alignment="flex-end" data-line>
-                    <ImageContainer
-                        onMouseEnter={() => setHoveredCircle2(true)}
-                        onMouseLeave={() => setHoveredCircle2(false)}
-                    >
-                        <StyledAnimatedImage2 src="/home/main_dumbbells.webp" alt="덤벨 이미지" data-animated />
-                        <Circle2 data-circle />
-                        <Tooltip $isVisible={hoveredCircle2} $position="left">
-                            <p>개발은 체력이죠 꾸준히 운동도 하려고 노력합니다.</p>
-                        </Tooltip>
-                    </ImageContainer>
-                    <Word data-word>PERFORMANCE</Word>
-                </StyledLine>
+            <StyledLine alignment="flex-end" data-line>
+            <ImageContainer
+                onMouseEnter={() => setHoveredCircle2(true)}
+                onMouseLeave={() => setHoveredCircle2(false)}
+            >
+                <StyledAnimatedImage2 src="/home/main_dumbbells.webp" alt="덤벨 이미지" data-animated />
+                <Circle2 data-circle />
+                <Tooltip $isVisible={hoveredCircle2} $position="left">
+                <p>개발은 체력이죠 꾸준히 운동도 하려고 노력합니다.</p>
+                </Tooltip>
+            </ImageContainer>
+            <Word data-word>PERFORMANCE</Word>
+            </StyledLine>
 
-                <StyledLine alignment="flex-start" data-line>
-                    <Word data-word>IMPROVEMENT</Word>
-                </StyledLine>
-            </TitleContainer>
-        </Container>
+            <StyledLine alignment="flex-start" data-line>
+            <Word data-word>IMPROVEMENT</Word>
+            </StyledLine>
+        </TitleContainer>
+        </ScaleWrapper>
+    </Container>
     );
+
 };
 
 export default TitleSection;
