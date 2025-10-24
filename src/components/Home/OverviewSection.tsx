@@ -335,7 +335,6 @@ const OverviewSection = () => {
     const overviewRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-  // 초기 상태
   gsap.set([textRef_1.current, textRef_2.current, projectRef.current, aboutRef.current], {
     opacity: 0,
     y: 16,
@@ -343,7 +342,6 @@ const OverviewSection = () => {
   });
   gsap.set([lineRef.current, titleRef.current], { opacity: 0 });
 
-  // 전체 컨테이너 페이드인
   gsap.fromTo(
     overviewRef.current,
     { opacity: 0, y: 16, willChange: 'opacity, transform' },
@@ -365,7 +363,6 @@ const OverviewSection = () => {
   const d = isMobile || isTablet ? 0.35 : 0.5;
   const gap = isMobile || isTablet ? 0.05 : 0.15;
 
-  // ✅ 구분선(line) opacity 복구 추가
   const tl = gsap.timeline({
     defaults: { ease: 'power2.out' },
     scrollTrigger: {

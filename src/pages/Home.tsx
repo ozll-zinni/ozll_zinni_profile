@@ -62,7 +62,6 @@ export default function Home() {
               <TitleSection />
             </div>
           </ScaleWrapper>
-
           <OverviewSection />
         </ContentWrap>
       </HomeWrap>

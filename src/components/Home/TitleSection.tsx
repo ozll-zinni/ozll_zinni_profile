@@ -110,7 +110,7 @@ const StyledAnimatedImage1 = styled.img`
     transform: translateY(1.25rem);
 
     @media (max-width: 640px) {
-        display: none; /* ✅ 모바일에서 겹침 방지 */
+        display: none;
     }
 `;
 
